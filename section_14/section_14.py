@@ -128,3 +128,95 @@
 # print(re.findall(r'^\d','The 2 is a number'))
 
 # ---------------------------------------- Timing your python code ----------------------------------------
+# def func_one(n):
+#     return [str(num) for num in range(n)]
+# print(func_one(10))
+
+# def func_two(n):
+#     return list(map(str, range(n)))
+# print(func_two(10))
+
+# import time
+
+# # STEP 1: Get start time
+# start_time = time.time()
+# # Step 2: Run your code you want to time
+# result = func_one(1000000)
+# # Step 3: Calculate total time elapsed
+# end_time = time.time() - start_time
+# print(end_time)
+
+# # STEP 1: Get start time
+# start_time = time.time()
+# # Step 2: Run your code you want to time
+# result = func_two(1000000)
+# # Step 3: Calculate total time elapsed
+# end_time = time.time() - start_time
+# print(end_time)
+
+# import timeit
+# setup = '''
+# def func_one(n):
+#     return [str(num) for num in range(n)]
+# '''
+# stmt = 'func_one(100)'
+# print(timeit.timeit(stmt,setup,number=100000))
+
+# setup2 = '''
+# def func_two(n):
+#     return list(map(str,range(n)))
+# '''
+# stmt2 = 'func_two(100)'
+# print(timeit.timeit(stmt2,setup2,number=100000))
+
+# ---------------------------------------- Unzipping and Zipping Files ----------------------------------------
+# # slashes may need to change for MacOS or Linux
+# f = open("new_file.txt",'w+')
+# f.write("Here is some text")
+# f.close()
+
+
+# # slashes may need to change for MacOS or Linux
+# f = open("new_file2.txt",'w+')
+# f.write("Here is some text")
+# f.close()
+
+# import zipfile
+# comp_file = zipfile.ZipFile('comp_file.zip','w')
+# comp_file.write("new_file.txt",compress_type=zipfile.ZIP_DEFLATED)
+# comp_file.write('new_file2.txt',compress_type=zipfile.ZIP_DEFLATED)
+# comp_file.close()
+# zip_obj = zipfile.ZipFile('comp_file.zip','r')
+# zip_obj.extractall("extracted_content")
+
+# ---------------------------------------- Advanced Python Module Puzzle ----------------------------------------
+import shutil
+shutil.unpack_archive('./unzip_me_for_instructions.zip', '', 'zip')
+with open('extracted_content/Instructions.txt') as f:
+    content = f.read()
+    print(content)
+
+import re
+pattern = r'\d{3}-\d{3}-\d{4}'
+test_string = 'here is a phone number 123-123-1234'
+re.findall(pattern, test_string)
+
+def search(file, pattern=r'\d{3}-\d{3}-\d{4}'):
+    f = open(file, 'r')
+    text = f.read()
+
+    if re.search(pattern, text):
+        return re.search(pattern, text)
+    else:
+        return ''
+
+import os
+results = []
+for folder,sub_folders,files in os.walk(os.getcwd()+'/extracted_content'):
+    for f in files:
+        full_path = folder+'/'+f
+
+        results.append(search(full_path))
+for r in results:
+    if r != '':
+        print(r.group())
